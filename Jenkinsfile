@@ -2,8 +2,7 @@ properties([buildDiscarder(logRotator(
 artifactDaysToKeepStr: '', 
 artifactNumToKeepStr: '', 
 daysToKeepStr: '2', 
-numToKeepStr: '2')), 
-pipelineTriggers([cron('* * * * *')])]
+numToKeepStr: '2'))]
 )
 pipeline {
     agent any
