@@ -12,7 +12,7 @@ pipeline {
         }
         stage('maven_build') { 
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean yum install'
             }
         }
         stage('Docker_image_build') { 
