@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Docker_image_build') { 
             steps {
-                echo "Test webhook Need to create steps for docke build" 
+                echo "Test webhook Need to create steps for docker build" 
             }
         }
 
