@@ -2,7 +2,7 @@ properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKe
 pipeline {
     agent any
     tools {
-     maven 'Maven'
+     maven 'null'
      }
     stages {
         stage('git clone') {
