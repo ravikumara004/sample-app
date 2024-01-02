@@ -1,25 +1,29 @@
-properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '2', numToKeepStr: '2')), pipelineTriggers([pollSCM(ignorePostCommitHooks: true, scmpoll_spec: '* * * * *')])])
 pipeline {
     agent any
     tools {
-     maven 'null'
-     }
+        maven 'Maven 3.3.9'
+        jdk 'jdk8'
+    }
     stages {
-        stage('git clone') {
+        stage ('Initialize') {
             steps {
-                git branch: 'main', url: 'https://github.com/Manvith124/sample-app.git'
-            }
-        }
-        stage('maven_build') { 
-            steps {
-                sh 'mvn clean yum install'
-            }
-        }
-        stage('Docker_image_build') { 
-            steps {
-                echo "Test webhook Need to create steps for docker build" 
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                '''
             }
         }
 
+        stage ('Build') {
+            steps {
+                sh 'mvn -Dmaven.test.failure.ignore=true install' 
+            }
+            post {
+                success {
+                    junit 'target/surefire-reports/**/*.xml' 
+                }
+            }
+        }
     }
+}
 }
