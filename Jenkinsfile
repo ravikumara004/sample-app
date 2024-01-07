@@ -1,31 +1,33 @@
-properties([buildDiscarder(logRotator(
-artifactDaysToKeepStr: '', 
-artifactNumToKeepStr: '', 
-daysToKeepStr: '2', 
-numToKeepStr: '2')), 
-pipelineTriggers([cron('* * * * *')])]
-)
 pipeline {
     agent any
     tools {
-     maven 'Maven'
-     }
+     maven 'maven'
+    }
     stages {
         stage('git clone') {
             steps {
-                git branch: 'main', url: 'https://github.com/Manvith124/sample-app.git'
+                git branch: 'main', url: 'https://github.com/Manvith124/webapplication.git'
             }
         }
-        stage('maven_build') { 
+        stage('maven') {
             steps {
                 sh 'mvn clean install'
             }
         }
-        stage('Docker_image_build') { 
+        stage('docker image build') {
             steps {
-                echo " Need to create steps for docke build" 
+                sh 'docker build -t shivakumarveerapur124/app1 .'
             }
         }
-
+        stage('docker image push'){
+            steps {
+               withCredentials([string(credentialsId: 'pass', variable: 'dockpassword')]) {
+                    sh 'docker login -u shivakumarveerapur124 -p ${dockpassword}'
+                
+                }
+               
+                sh 'docker push shivakumarveerapur124/app1'
+            }
+        }
     }
 }
