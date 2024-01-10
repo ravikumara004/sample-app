@@ -16,7 +16,7 @@ pipeline {
         }
         stage('docker image build') {
             steps {
-                sh 'docker build -t shivakumarveerapur124/app1 .'
+                sh 'docker build -t shivakumarveerapur124/app2 .'
             }
         }
         stage('docker image push'){
