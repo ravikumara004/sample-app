@@ -7,3 +7,4 @@ RUN chmod -R 777 /usr/local/tomcat/conf
 RUN chmod -R 777 /usr/local/tomcat/webapps
 CMD ["/usr/local/tomcat/bin/catalina.sh", "run"]
 
+
