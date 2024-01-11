@@ -1,12 +1,14 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: 
-      - '**'   
+ workflow_dispatch:
 
 
 jobs:
+
+  call-workflow-in-local-repo:
+    uses: ./.github/workflows/docker.yaml
+    
 
   build:
 
