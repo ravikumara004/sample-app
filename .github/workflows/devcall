@@ -1,0 +1,10 @@
+name: call docker workflow
+
+on:
+  push:
+    branches: [ "dev" ]
+
+jobs:
+
+  call-worlflow-using-branch:
+    uses: ravikumara004/sample-app/.github/workflows/docker.yml@main
