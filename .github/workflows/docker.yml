@@ -1,13 +1,12 @@
 name: Docker Image CI
 
 on:
- workflow_dispatch:
+ push:
+   branches:
+     - main
 
 
 jobs:
-
-  call-workflow-in-local-repo:
-    uses: ./.github/workflows/docker.yaml
     
 
   build:
@@ -17,4 +16,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: |
+        echo "i'm on main"
+      
