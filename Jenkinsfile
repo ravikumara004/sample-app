@@ -26,7 +26,7 @@ pipeline {
                 
                 }
                
-                sh 'docker push shivakumarveerapur124/app2'
+                sh 'docker push shivakumarveerapur124/app1'
             }
         }
     }
