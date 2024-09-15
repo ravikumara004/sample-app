@@ -1,24 +1,33 @@
-properties([[$class: 'JiraProjectProperty'], buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '5')), parameters([choice(choices: ['master', 'stage', 'uat', 'prepro'], description: 'single job implimenting the declarative pipeline', name: 'Branch')]), [$class: 'JobLocalConfiguration', changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
-
-pipeline{
+pipeline {
     agent any
     tools {
-      maven 'Maven_Home.3.6.3'
+     maven 'maven'
     }
-
-      stages {
-        stage("scm_checkout") {
+    stages {
+        stage('git clone') {
             steps {
-              git credentialsId: 'github_id', url: 'https://github.com/githubjigalooru/maven-web-application.git'    
-                
+                git branch: 'main', url: 'https://github.com/Manvith124/webapplication.git'
             }
-	}
-        stage ("build_artifact") {
-  	  steps {
-	    sh "mvn clean install"
-	     }
-  	
         }
-
-     }
+        stage('maven') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        stage('docker image build') {
+            steps {
+                sh 'docker build -t shivakumarveerapur124/app2 .'
+            }
+        }
+        stage('docker image push'){
+            steps {
+               withCredentials([string(credentialsId: 'pass', variable: 'dockpassword')]) {
+                    sh 'docker login -u shivakumarveerapur124 -p ${dockpassword}'
+                
+                }
+               
+                sh 'docker push shivakumarveerapur124/app1'
+            }
+        }
+    }
 }
