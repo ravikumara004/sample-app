@@ -1,24 +1,25 @@
-properties([[$class: 'JiraProjectProperty'], buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '5', numToKeepStr: '5')), parameters([choice(choices: ['master', 'stage', 'uat', 'prepro'], description: 'single job implimenting the declarative pipeline', name: 'Branch')]), [$class: 'JobLocalConfiguration', changeReasonComment: ''], pipelineTriggers([pollSCM('* * * * *')])])
-
-pipeline{
+properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '2', numToKeepStr: '2')), pipelineTriggers([pollSCM('* * * * *')])])
+pipeline {
     agent any
     tools {
-      maven 'Maven_Home.3.6.3'
-    }
-
-      stages {
-        stage("scm_checkout") {
+     maven 'Maven'
+     }
+    stages {
+        stage('git clone') {
             steps {
-              git credentialsId: 'github_id', url: 'https://github.com/githubjigalooru/maven-web-application.git'    
-                
+                git branch: 'main', url: 'https://github.com/Manvith124/sample-app.git'
             }
-	}
-        stage ("build_artifact") {
-  	  steps {
-	    sh "mvn clean install"
-	     }
-  	
+        }
+        stage('maven_build') { 
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        stage('Docker_image_build') { 
+            steps {
+                echo " Need to create steps for docke build" 
+            }
         }
 
-     }
+    }
 }
