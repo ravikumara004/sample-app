@@ -1,19 +1,17 @@
-name: Docker Image CI
+name: Manual Workflow
 
 on:
- workflow_call
+  pull_request:
+    types: [opened, labeled, closed]
 
+env:
+  Pr_Number: "11"
+#
 
 jobs:
-    
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: |
-        echo "i'm on main sampleapp"
-      
+  call-workflow:
+    uses: ./.github/workflows/image.yml #ravikumara004/protectbranch/.github/workflows/renew.yaml@v1.0.0    #./.github/workflows/re.yaml
+    with:
+      Pr_Number: ${{ env.project1 }}
+    secrets:
+      token: ${{ secrets.MY_TOKEN }} # Correctly use the secret
