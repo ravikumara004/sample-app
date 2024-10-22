@@ -11,16 +11,16 @@ jobs:
   update-pr-body:
     runs-on: ubuntu-latest
     steps:
-    
-      - name: Set GITHUB_TOKEN
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-          
+             
       - name: Checkout Code
         uses: actions/checkout@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         
       - name: Update PR Body with PrNumber
         uses: actions/github-script@v6 # Using the latest stable version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
           script: |
             const Pr_Number = core.getInput('Pr_Number');
