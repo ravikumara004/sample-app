@@ -11,6 +11,11 @@ jobs:
   update-pr-body:
     runs-on: ubuntu-latest
     steps:
+    
+      - name: Set GITHUB_TOKEN
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          
       - name: Checkout Code
         uses: actions/checkout@v3
         
