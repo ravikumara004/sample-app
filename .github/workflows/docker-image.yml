@@ -1,10 +1,39 @@
-name: dev docker workflow
+name: Update
 
 on:
-  push:
-    branches: [ "dev" ]
+  workflow_dispatch:
+    inputs:
+      Pr_Number:
+        description: 'Pull Request Number'
+        required: true
 
 jobs:
+  update-pr-body:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        
+      - name: Update PR Body with PrNumber
+        uses: actions/github-script@v6 # Using the latest stable version
+        with:
+          script: |
+            const Pr_Number = core.getInput('Pr_Number');
+            
+            // Fetch the pull request details
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: Pr_Number,
+            });
 
-  call-worlflow-using-branch:
-    uses: ravikumara004/sample-app/.github/workflows/docker.yml@main
+            // Construct the new body for the PR
+            const newBody = `${pullRequest.body}\n\nUpdated PR Number: ${Pr_Number}`;
+            
+            // Update the pull request body
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: Pr_Number,
+              body: newBody
+            });
