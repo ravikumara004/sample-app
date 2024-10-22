@@ -1,3 +1,4 @@
+
 name: Manual Workflow
 
 on:
@@ -15,3 +16,4 @@ jobs:
       Pr_Number: ${{ env.project1 }}
     secrets:
       token: ${{ secrets.MY_TOKEN }} # Correctly use the secret
+
