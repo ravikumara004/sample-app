@@ -16,19 +16,28 @@ on:
         description: 'Repository Name'
         required: true
 jobs:
-  update-pr-body:
-    runs-on: ubuntu-latest
-    steps:
-      # - name: Checkout Code
-      #   uses: actions/checkout@v3
+  # update-pr-body:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # - name: Checkout Code
+  #     #   uses: actions/checkout@v3
 
-      - name: Print value 
-        run: |
-          echo "The Pull Request Number is ${{ github.event.inputs.Pr_Number }}"
-          echo "The Pull Request Number is ${{ github.event.inputs.C_Version }}"
-          echo "The Pull Request Number is ${{ github.event.inputs.S_Version }}"
-          echo "The Pull Request Number is ${{ github.event.inputs.Repository }}"
-        
+  #     - name: Print value 
+  #       run: |
+  #         echo "The Pull Request Number is ${{ github.event.inputs.Pr_Number }}"
+  #         echo "The Pull Request Number is ${{ github.event.inputs.C_Version }}"
+  #         echo "The Pull Request Number is ${{ github.event.inputs.S_Version }}"
+  #         echo "The Pull Request Number is ${{ github.event.inputs.Repository }}"
+
+  call-workflow-passing-data:
+    uses: ravikumara004/sample-app/.github/workflows/docker.yml@main
+    with:
+      Pr_Number: ${{ github.event.inputs.Pr_Number }}
+      C_Version: ${{ github.event.inputs.C_Version }}
+      S_Version: ${{ github.event.inputs.S_Version }}
+      Repository: ${{ github.event.inputs.Repository }}
+    # secrets:
+    #   personal_access_token: ${{ secrets.token }}
       # - name: Update PR Body with PrNumber, DistributedVersion, SearchAppVersion
       #   uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
       #   with:
