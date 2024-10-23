@@ -1,17 +1,29 @@
-name: Manual Workflow
-
 on:
-  pull_request:
-    types: [opened, labeled, closed]
-
-env:
-  Pr_Number: "11"
-#
-
+  workflow_call:
+    inputs:
+      Pr_Number:
+        type: string
+        required: true
+      C_Version:
+        type: string
+        required: true
+      S_Version:
+        type: string
+        required: true
+      Repository:
+        type: string
+        required: true
 jobs:
-  call-workflow:
-    uses: ./.github/workflows/image.yml #ravikumara004/protectbranch/.github/workflows/renew.yaml@v1.0.0    #./.github/workflows/re.yaml
-    with:
-      Pr_Number: ${{ env.project1 }}
-    secrets:
-      token: ${{ secrets.MY_TOKEN }} # Correctly use the secret
+  update-pr-body:
+    runs-on: ubuntu-latest
+    steps:
+      # - name: Checkout Code
+      #   uses: actions/checkout@v3
+
+      - name: Print value 
+        run: |
+          echo "The Pull Request Number is ${{ github.event.inputs.Pr_Number }}"
+          echo "The Pull Request Number is ${{ github.event.inputs.C_Version }}"
+          echo "The Pull Request Number is ${{ github.event.inputs.S_Version }}"
+          echo "The Pull Request Number is ${{ github.event.inputs.Repository }}"
+
