@@ -6,15 +6,15 @@ on:
       Pr_Number:
         description: 'Pull Request Number'
         required: true
-      # Cytric_Version:
-      #   description: 'Cytric Version'
-      #   required: true
-      # Search_Version:
-      #   description: 'SearchApp Version'
-      #   required: true
-      # Repository:
-      #   description: 'Repository Name'
-      #   required: true
+      C_Version:
+        description: 'Cytric Version'
+        required: true
+      S_Version:
+        description: 'SearchApp Version'
+        required: true
+      Repository:
+        description: 'Repository Name'
+        required: true
 jobs:
   update-pr-body:
     runs-on: ubuntu-latest
@@ -22,8 +22,12 @@ jobs:
       # - name: Checkout Code
       #   uses: actions/checkout@v3
 
-      - name: Print PR Number
-        run: echo "The Pull Request Number is ${{ github.event.inputs.Pr_Number }}"
+      - name: Print value 
+        run: |
+          echo "The Pull Request Number is ${{ github.event.inputs.Pr_Number }}"
+          echo "The Pull Request Number is ${{ github.event.inputs.C_Version }}"
+          echo "The Pull Request Number is ${{ github.event.inputs.S_Version }}"
+          echo "The Pull Request Number is ${{ github.event.inputs.Repository }}"
         
       # - name: Update PR Body with PrNumber, DistributedVersion, SearchAppVersion
       #   uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
