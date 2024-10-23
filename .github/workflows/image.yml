@@ -21,6 +21,9 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+
+      - name: Print PR Number
+        run: echo "The Pull Request Number is ${{ github.event.inputs.Pr_Number }}"
         
       # - name: Update PR Body with PrNumber, DistributedVersion, SearchAppVersion
       #   uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
